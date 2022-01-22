@@ -1,5 +1,6 @@
 {
 	"name": "dnj/log",
+	"license": "MIT",
 	"require": {
 		"php": "^8.0",
 		"dnj/local-filesystem": "^1.0",
