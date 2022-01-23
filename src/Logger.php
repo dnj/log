@@ -7,7 +7,6 @@ use Exception;
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
-use Stringable;
 
 /**
  * @phpstan-type LineComponents array{date:string,pid:string,level:string,generation:string,message:string}
@@ -35,16 +34,35 @@ class Logger extends AbstractLogger
         [46, 96], // LogLevel::INFO
     ];
 
-    protected ?File $file = null;
-    protected int $generation = 0;
-    protected string $indentation = "\t";
-    protected ?int $level = null;
-    protected bool $quiet = true;
+    /**
+     * @var File|null
+     */
+    protected $file = null;
+
+    /**
+     * @var int
+     */
+    protected $generation = 0;
+
+    /**
+     * @var string
+     */
+    protected $indentation = "\t";
+
+    /**
+     * @var int|null
+     */
+    protected $level = null;
+
+    /**
+     * @var bool
+     */
+    protected $quiet = true;
 
     /**
      * @var array{"level":mixed,"message":string}|null
      */
-    protected ?array $lastLog = null;
+    protected $lastLog = null;
 
     public function getInstance(): self
     {
@@ -114,9 +132,10 @@ class Logger extends AbstractLogger
     }
 
     /**
+     * @param string  $message
      * @param mixed[] $context
      */
-    public function append(string|Stringable $message, array $context = []): void
+    public function append($message, $context = []): void
     {
         if (null === $this->lastLog) {
             throw new Exception();
@@ -126,9 +145,10 @@ class Logger extends AbstractLogger
     }
 
     /**
+     * @param string  $message
      * @param mixed[] $context
      */
-    public function reply(string|Stringable $message, array $context = []): void
+    public function reply($message, $context = []): void
     {
         if (null === $this->lastLog) {
             throw new Exception();
@@ -138,9 +158,10 @@ class Logger extends AbstractLogger
     }
 
     /**
+     * @param string  $message
      * @param mixed[] $context
      */
-    public function log($level, string|Stringable $message, array $context = []): void
+    public function log($level, $message, $context = []): void
     {
         $levelIndex = array_search($level, self::LOG_LEVELS);
         if (false === $levelIndex) {
@@ -180,9 +201,10 @@ class Logger extends AbstractLogger
     }
 
     /**
+     * @param string  $message
      * @param mixed[] $context
      */
-    protected function makeMessage(string|Stringable $message, array $context = []): string
+    protected function makeMessage($message, $context = []): string
     {
         if (!is_string($message)) {
             $message = $message->__toString();

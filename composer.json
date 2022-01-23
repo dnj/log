@@ -2,9 +2,9 @@
 	"name": "dnj/log",
 	"license": "MIT",
 	"require": {
-		"php": "^8.0",
+		"php": "^7.1|^8.0",
 		"dnj/local-filesystem": "^1.0",
-		"psr/log": "^3.0"
+		"psr/log": "^1|^2|^3"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",
